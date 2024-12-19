@@ -36,12 +36,6 @@ class Solution {
             }
         }
         
-        // for(int i=0;i<n;i++){
-        //     for(int j=0;j<n;j++){
-        //         System.out.print(list[i][j]+" ");
-        //     }
-        //     System.out.println(point[i]);
-        // }
         
         //결과 계산
         for(int i=0;i<n;i++){
@@ -55,14 +49,8 @@ class Solution {
                 int a = list[i][j];
                 int b = list[j][i];
                 
-                if(a > b){
-                    gift++;
-                }
-                else if((a==0 && b==0)|| a == b){
-                    
-                    if(point[i]>point[j]) gift++;
-                    
-                }
+                if(a > b) gift++;
+                else if(a == b && point[i]>point[j]) gift++;
             }
             
             answer = Math.max(gift,answer);
