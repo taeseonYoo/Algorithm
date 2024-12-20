@@ -25,14 +25,9 @@ public class Main {
 
         for (String name : mp.keySet()) {
 
-            if (mp.get(name) > maxValue){
+            if (mp.get(name) > maxValue || (mp.get(name) == maxValue && name.compareTo(title) < 0)){
                 maxValue = mp.get(name);
                 title = name;
-            }else if(mp.get(name)==maxValue){
-                if( name.compareTo(title)<0){
-                    maxValue = mp.get(name);
-                    title = name;
-                }
             }
         }
         System.out.println(title);
