@@ -4,7 +4,7 @@ class Solution {
         
     
         StringBuilder sb = new StringBuilder();
-        boolean flag = true;
+        boolean isFirst = true;
         
         
         for(int i=0;i<s.length();i++){
@@ -12,22 +12,16 @@ class Solution {
             char ch = s.charAt(i);
             
             if(ch == ' '){
-                flag = true;
+                isFirst = true;
                 sb.append(ch);
                 continue;
             }
             
-            if(Character.isLetter(ch) && flag){
+            if(isFirst){
                 ch = Character.toUpperCase(ch);
-                
-                flag = false;
-            }else if (!Character.isLetter(ch) && flag){
-                ch = ch;
-                
-                flag = false;
+                isFirst = false;
             }else{
                 ch = Character.toLowerCase(ch);
-                
             }
             
             sb.append(ch);
