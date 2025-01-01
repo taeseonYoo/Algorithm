@@ -6,21 +6,16 @@ class Solution {
         
         
         
-        List<Integer> list = new ArrayList<>();
-        
         while(!s.equals("1")){
-            int n = s.length();
+            answer[1] += s.length();
             s = s.replace("0","");
-            list.add(n- s.length());
+            
+            answer[0]++;
+            answer[1] -= s.length();
             s = Integer.toBinaryString(s.length());
+    
         }
-        answer[0]= list.size();
         
-        int sum=0;
-        for(Integer i :list){
-            sum += i;
-        }
-        answer[1]=sum;
         
         return answer;
     }
