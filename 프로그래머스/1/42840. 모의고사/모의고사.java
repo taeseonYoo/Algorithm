@@ -1,10 +1,11 @@
 import java.util.*;
 
 class Solution {
-    int[] result = new int[3];
+    
     public List<Integer> solution(int[] answers) {
         
-        List<Integer> answer = new ArrayList<>();
+        int[] result = new int[3];
+        
         
         int[] num1 = {1,2,3,4,5};
         int[] num2 = {2,1,2,3,2,4,2,5};
@@ -19,10 +20,10 @@ class Solution {
                 result[2]++;        
         }
        
-        int max = 0;
-        for(int i=0;i<3;i++){
-            max = Math.max(max,result[i]);
-        }
+        List<Integer> answer = new ArrayList<>();
+        
+        int max = Math.max(result[0],Math.max(result[1],result[2]));
+        
         for(int i=0;i<3;i++){
             if(max == result[i]){
                 answer.add(i+1);
