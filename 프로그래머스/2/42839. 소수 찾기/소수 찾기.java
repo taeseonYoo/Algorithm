@@ -1,70 +1,51 @@
 import java.util.*;
 
 class Solution {
-    public Boolean[] atc = new Boolean[10000001];
-    public Map<Integer,Integer> m = new HashMap<>();
-    public int answer = 0;
+    public boolean[] isPrime;
+    public Set<Integer> uniqueValue = new HashSet<>();
     
     public int solution(String numbers) {
         
-        Arrays.fill(atc,true);
-        vali();
+        int num = (int) Math.pow(10, numbers.length());
+        initPrime(num);
         
-        String[] arr = numbers.split("");
-        String[] output = new String[arr.length];
-        boolean[] visited = new boolean[arr.length];
+        permutation("",numbers);
         
-        
-        for(int i=0;i<arr.length;i++){
-            permutation(arr,output,visited,0,i+1);
-        }
-        
-        for(int num : m.keySet()){
-            if(atc[num] && num >1){
-
-                answer++;
-            }
-        }
-        
-        return answer;
+        return uniqueValue.size();
     }
-    public void permutation(String[] arr, String[] output,boolean[] visited,int depth,int r){
+    public void initPrime(int num){
         
-        if(depth == r){
-            StringBuilder sb = new StringBuilder();
-            for(int i=0;i<r;i++){
-                sb.append(output[i]);
-            }
-            int target = Integer.parseInt(sb.toString());
-            
-            if(atc[target]==true){
-                m.put(target,0);
-            }
-            return;
-        }
+        isPrime = new boolean[num+1];
+        Arrays.fill(isPrime,true);
+        isPrime[0]=false;
+        isPrime[1]=false;
         
-        for(int i=0;i<arr.length;i++){
-            if(!visited[i]){
-                visited[i]=true;
-                output[depth]=arr[i];
-                permutation(arr, output, visited, depth + 1, r);
-                visited[i]=false;
-            }
-            
-        }
-    }
-    
-    public void vali(){
-        
-        for(int i=2;i<=Math.sqrt(atc.length);i++){
-            if(atc[i]==true){
+        for(int i=2;i<=Math.sqrt(num);i++){
+            if(isPrime[i]){
                 int j=2;
-                while(i*j < atc.length){
-                    atc[i*j]=false;
+                while(i*j<=num){
+                    isPrime[i*j]=false;
                     j++;
                 }
             }
-            
         }
     }
+    
+    public void permutation(String answer,String str){
+        
+        if(!answer.isEmpty()){
+            int a = Integer.parseInt(answer);
+            if(isPrime[a]){
+                
+                uniqueValue.add(a);
+            }
+        }
+        
+        for(int i=0;i<str.length();i++){
+            permutation(answer+str.charAt(i), str.substring(0,i)+str.substring(i+1));
+        }
+    }
+    
+    
+   
 }
