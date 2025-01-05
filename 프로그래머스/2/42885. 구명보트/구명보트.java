@@ -11,14 +11,7 @@ class Solution {
         
         while(start<=end){
             
-            if(start==end){
-                answer++;
-                
-                break;
-            }
-            
-            int sum = people[end]+people[start];
-            if(sum <=limit){
+            if(people[end]+people[start] <=limit){
                 start++;
                 end--;
             }else{
