@@ -10,7 +10,7 @@ class Solution {
     
     public void permute(int[][] dungeons, int p, int k){
         
-        if(p == dungeons.length){
+        if(p == dungeons.length-1){
             
             int total = 0;
             
