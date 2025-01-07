@@ -30,18 +30,16 @@ public class Main {
         Collections.sort(list, new Comparator<Integer>() {
             @Override
             public int compare(Integer o1, Integer o2) {
+
                 if (mp.get(o1) < mp.get(o2)){
                     return 1;
-                }else if(mp.get(o1) > mp.get(o2)){
-                    return -1;
+                }else if(mp.get(o1) == mp.get(o2)){
+                    if(num.indexOf(o1) < num.indexOf(o2)){
+                        return -1;
+                    }else return 1;
                 }
 
-
-                if(num.indexOf(o1) < num.indexOf(o2)){
-                    return -1;
-                }else {
-                    return 1;
-                }
+                return -1;
 
             }
         });
