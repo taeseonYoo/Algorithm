@@ -20,14 +20,15 @@ public class Main {
             count++;
         }
 
-        Object[] arr =  map.keySet().toArray();
-        Arrays.sort(arr);
+        List<String> arr = new ArrayList<>(map.keySet());
+
+        Collections.sort(arr);
 
         StringBuilder sb = new StringBuilder();
 
-        for (int i = 0; i < arr.length; i++) {
-            double ratio = map.get(arr[i]) / (double)count * 100;
-            sb.append(arr[i]+" "+String.format("%.4f",ratio)).append("\n");
+        for (int i = 0; i < arr.size(); i++) {
+            double ratio = map.get(arr.get(i)) / (double)count * 100;
+            sb.append(arr.get(i)+" "+String.format("%.4f",ratio)).append("\n");
         }
 
         System.out.println(sb.toString());
