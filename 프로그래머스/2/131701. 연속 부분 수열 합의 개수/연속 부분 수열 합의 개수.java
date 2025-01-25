@@ -4,20 +4,20 @@ class Solution {
     public int solution(int[] elements) {
         int answer = 0;
         
-        Map<Integer,Integer> mp = new HashMap<>();
+        Set<Integer> s = new HashSet<>();
         
         
         for(int k=1;k<=elements.length;k++){
             for(int i=0;i<elements.length;i++){
             
-                int result = 0;
+                int sum = 0;
                 for(int j=i;j<i+k;j++){
-                    result += elements[j%elements.length];
+                    sum += elements[j%elements.length];
                 }
-                mp.put(result,1);
+                s.add(sum);
             }
         }
         
-        return mp.size();
+        return s.size();
     }
 }
