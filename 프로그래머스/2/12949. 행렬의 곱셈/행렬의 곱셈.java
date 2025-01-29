@@ -6,12 +6,8 @@ class Solution {
             for(int j=0;j<arr2[0].length;j++){
                 int result = 0;
                 
-                int p = arr1[i].length-1;
-                int q = arr2.length-1;
-                while(p>=0 || q>=0){
-                    result += arr1[i][p]*arr2[q][j];
-                    p--;
-                    q--;
+                for(int k=0;k<arr2.length;k++){
+                    result += arr1[i][k]* arr2[k][j];
                 }
                 
                 answer[i][j]= result;
