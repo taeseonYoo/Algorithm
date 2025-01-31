@@ -5,21 +5,23 @@ class Solution {
         
         int answer = 0;
         
-        LinkedList<String> l = new LinkedList<>();
+        if(cacheSize==0) return cities.length*5;
+        
+        List<String> l = new ArrayList<>();
         
         for(int i=0;i<cities.length;i++){
             
             String city = cities[i].toLowerCase();
             
-            if(l.contains(city) && cacheSize>0){
+            if(l.contains(city)){
                 l.remove(city);
-                l.offer(city);
+                l.add(city);
                 answer++;    
             }else{
                 if(l.size()>=cacheSize){
-                    l.poll();
+                    l.remove(0);
                 }
-                l.offer(city);
+                l.add(city);
                 answer+=5;
             }
         }
