@@ -28,11 +28,9 @@ class Solution {
         
         for(String key: a.keySet()){
             if(b.containsKey(key)){
-                int min = a.get(key) > b.get(key) ? b.get(key) : a.get(key);
-                int max = a.get(key) > b.get(key) ? a.get(key) : b.get(key);
-                intersect += min;
-                union += max;        
-            }else{
+                intersect+= Math.min(a.get(key),b.get(key));
+                union+= Math.max(a.get(key),b.get(key));      
+            }else{ //교집합이 아닌 값은 합집합에 추가
                 union += a.get(key);
             }
         }
@@ -42,10 +40,8 @@ class Solution {
             }
         }
         
-        if(union==0) return 1*65536;
         
-        
-        answer = (int)((double)intersect/union * 65536);
+        answer = union==0 ? 1*65536 : (int)((double)intersect/union * 65536);
         
         return answer;
     }
