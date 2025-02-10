@@ -29,9 +29,12 @@ class Solution {
             int ny = y+dy;
             
             if(nx<0 || nx>10||ny<0||ny>10) continue;
-        
-            s.add(""+Math.min(nx,x)+Math.min(ny,y)+Math.max(nx,x)+Math.max(ny,y));
             
+            StringBuilder sb = new StringBuilder();
+            
+            s.add(""+x+y+nx+ny);
+            s.add(""+nx+ny+x+y);
+        
     
             //이동
             x = nx; 
@@ -39,6 +42,6 @@ class Solution {
         }
         
         
-        return s.size();
+        return s.size()/2;
     }
 }
