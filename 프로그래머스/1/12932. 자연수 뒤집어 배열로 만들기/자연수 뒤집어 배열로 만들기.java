@@ -1,14 +1,13 @@
 import java.util.*;
 
 class Solution {
-    public List<Long> solution(long n) {
-        List<Long> list = new ArrayList<>();
+    public List<Integer> solution(long n) {
+        List<Integer> list = new ArrayList<>();
         
-        while(n/10 >0){
-            list.add(n%10);
+        while(n>0){
+            list.add((int) (n%10));
             n /= 10;
         }
-        list.add(n);
         
         return list;
     }
