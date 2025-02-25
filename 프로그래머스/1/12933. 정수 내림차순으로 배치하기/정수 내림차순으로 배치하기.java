@@ -7,14 +7,14 @@ class Solution {
         List<Long> list = new ArrayList<>();
         
         while(n>0){
-            list.add(n % 10); 
+            list.add( n % 10); 
             n /= 10;
         }
         
         Collections.sort(list,Collections.reverseOrder());
         
         for(long a : list){
-            answer = answer*10 + a;
+            answer = (long)answer * 10 + a;
         }
         
         
