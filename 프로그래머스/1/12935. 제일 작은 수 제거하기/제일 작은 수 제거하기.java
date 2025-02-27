@@ -9,13 +9,11 @@ class Solution {
             return answer;
         }
         
-        int min = arr[0];
         for(int a:arr){
-            min = a<min ? a : min;
             answer.add(a);
         }
         
-        answer.remove(new Integer(min));
+        answer.remove(Collections.min(answer));
         return answer;
     }
 }
