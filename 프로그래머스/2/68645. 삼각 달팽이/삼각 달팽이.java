@@ -1,30 +1,32 @@
 class Solution {
+    
     int[][] map;
+    int[][] op = {{1,0},{0,1},{-1,-1}};
+    
     public int[] solution(int n) {
         int[] answer = new int[n*(n+1)/2];
         
         map = new int[n+1][n+1];
         
-        int[][] op = {{1,0},{0,1},{-1,-1}};
-        int idx = 0;
+        int idx = 0, num=1;
         
-        int num = 1;
         int x = 0;
         int y = 1;
-        for(int j=n;j>=1;j--){
-            for(int i=1;i<=j;i++){
+        for(int step=n;step>=1;step--){
+            
+            for(int i=1;i<=step;i++){
                 x = x + op[idx][0];
                 y = y + op[idx][1];
                 map[x][y] = num++;
             }
             
-            idx = (idx == 2) ? 0 : (idx+1);
+            idx = (idx+1)%3;
         }
         
-        int g=0;
+        int index=0;
         for(int i=1;i<=n;i++){
             for(int j=1;j<=i;j++){
-                answer[g++] = map[i][j];
+                answer[index++] = map[i][j];
             }
         }
         
