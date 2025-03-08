@@ -18,7 +18,7 @@ class Solution {
         }
         
         for(int i=0;i<works.length;i++){
-            answer += (long)Math.pow(pq.poll(),2);
+            answer += Math.pow(pq.poll(),2);
         }
         
         return answer;
