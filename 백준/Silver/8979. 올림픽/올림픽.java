@@ -33,6 +33,7 @@ public class Main {
                     if(o1[2]<o2[2]) return 1;
                     else if (o1[2].equals(o2[2])) {
                         if(o1[3]<o2[3]) return 1;
+                        else if(o1[3].equals(o2[3])) return 0;
                         else return -1;
                     }else return -1;
                 }else return -1;
