@@ -43,20 +43,19 @@ public class Main {
 
         int rank = 1;
 
-        for (int i = 1; i < medal.size(); i++) {
+        for (int i = 0; i < medal.size(); i++) {
 
-            Integer[] before = medal.get(i-1);
-            Integer[] next = medal.get(i);
+            if (i > 0) {
+                Integer[] before = medal.get(i-1);
+                Integer[] next = medal.get(i);
 
-            if(before[1].equals(next[1])&&
-                    before[2].equals(next[2])&&
-                    before[3].equals(next[3])){
-
-            }else{
-                rank++;
+                if(!(before[1].equals(next[1])&&
+                        before[2].equals(next[2])&&
+                        before[3].equals(next[3]))){
+                    rank = i+1;
+                }
             }
-
-            if (k == next[0]) {
+            if (medal.get(i)[0] == k) {
                 System.out.println(rank);
                 break;
             }
