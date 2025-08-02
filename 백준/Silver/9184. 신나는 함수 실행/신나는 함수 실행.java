@@ -13,7 +13,7 @@ public class Main {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        dp = new int[50][50][50];
+        dp = new int[21][21][21];
 
         while(true){
             String line = br.readLine();
@@ -45,11 +45,8 @@ public class Main {
         }
 
         if (a < b && b < c) {
-            dp[a][b][c] = w(a, b, c - 1) + w(a, b - 1, c - 1) - w(a, b - 1, c);
-        }else{
-            dp[a][b][c] = w(a - 1, b, c) + w(a - 1, b - 1, c) + w(a - 1, b, c - 1) - w(a - 1, b - 1, c - 1);
+            return dp[a][b][c] = w(a, b, c - 1) + w(a, b - 1, c - 1) - w(a, b - 1, c);
         }
-
-        return dp[a][b][c];
+        return dp[a][b][c] = w(a - 1, b, c) + w(a - 1, b - 1, c) + w(a - 1, b, c - 1) - w(a - 1, b - 1, c - 1);
     }
 }
