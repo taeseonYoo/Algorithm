@@ -3,30 +3,29 @@ import java.util.*;
 class Solution {
     public int solution(int[] order) {
         
-        //보조 컨테이너 벨트
+        int answer = 0, idx = 0;
+        
+        //보조 컨테이너
         Stack<Integer> st = new Stack<>();
         
-        int box = 1;
-        int idx = 0;
-        
-        while(box<=order.length){
+        //메인 컨테이너의 박스
+        for(int i=1; i<=order.length; i++){
             
-            if(box == order[idx]){
-                box++;
+            //메인 컨테이너와 주문이 일치한다면, answer++, inx++
+            if(i==order[idx]){
+                answer++;
                 idx++;
-            }else if(!st.isEmpty() && st.peek() == order[idx]){
-                idx++;
-                st.pop();
             }else{
-                st.push(box++);
+                st.add(i);
             }
+            
+            //stack이 비어있지 않다면, 주문과 일치하는 지 확인
+            while(!st.isEmpty() && st.peek() == order[idx]){
+                st.pop();
+                answer++;
+                idx++;
+            }            
         }
-        
-        while(!st.empty() && st.peek()==order[idx] && idx < order.length){
-            st.pop();
-            idx++;
-        }
-        
-        return idx;
+        return answer;
     }
 }
