@@ -2,6 +2,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.Stack;
 
 
@@ -15,41 +17,38 @@ public class Main {
         //테스트 케이스
         int T = Integer.parseInt(br.readLine());
 
-        Stack<Character> answer = new Stack<>();
-        Stack<Character> tmp = new Stack<>();
+        Deque<Character> answer = new ArrayDeque<>();
+        Deque<Character> tmp = new ArrayDeque<>();
 
 
         while (T > 0) {
             String input = br.readLine();
 
-            
-            int cursor = 0;
-
             for (int i = 0; i < input.length(); i++) {
                 char ch = input.charAt(i);
 
                 if (isChar(ch)) { //문자는 정답에 저장한다.
-                    answer.push(ch);
+                    answer.addLast(ch);
                 } else if (ch == '-') {
-                    if (!answer.empty()) answer.pop();
+                    if (!answer.isEmpty()) answer.pollLast();
                 } else if (ch == '<') {
-                    if (!answer.empty()) {
-                        tmp.push(answer.pop());
+                    if (!answer.isEmpty()) {
+                        tmp.addLast(answer.pollLast());
                     }
                 } else if (ch == '>') {
-                    if (!tmp.empty()) {
-                        answer.push(tmp.pop());
+                    if (!tmp.isEmpty()) {
+                        answer.addLast(tmp.pollLast());
                     }
                 }
             }
 
             //정답 출력
             StringBuilder sb = new StringBuilder();
-            while (!answer.empty()) {
-                tmp.push(answer.pop());
+            while (!answer.isEmpty()) {
+                sb.append(answer.pollFirst());
             }
-            while (!tmp.empty()) {
-                sb.append(tmp.pop());
+            while (!tmp.isEmpty()) {
+                sb.append(tmp.pollLast());
             }
             System.out.println(sb);
 
