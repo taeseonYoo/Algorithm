@@ -20,11 +20,10 @@ public class Main {
 
     static int N, M;
     static boolean[] visited;
-    static List<Integer> result = new ArrayList<>();
+    static int[] result;
     static StringBuilder sb = new StringBuilder();
 
-    //주어지는 수 저장
-    static List<Integer> number =new ArrayList<>();
+    static int[] numbers;
 
     public static void main(String[] args) throws IOException {
 
@@ -35,15 +34,13 @@ public class Main {
         N = split[0];
         M = split[1];
 
-        int[] numbers = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
-
-        for (int i = 0; i < N; i++) {
-            number.add(numbers[i]);
-        }
-        number.sort(Comparator.naturalOrder());
+        numbers = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+        //사전 순 출력을 위해, 정렬
+        Arrays.sort(numbers);
 
         //방문여부
         visited = new boolean[N];
+        result = new int[N];
 
         recur(0);
         System.out.println(sb);
@@ -52,21 +49,20 @@ public class Main {
     //백트래킹
     static void recur(int num) {
         if (num == M) {
-            for (Integer i : result) {
-                sb.append(i).append(" ");
+            for (int i = 0; i < M; i++) {
+                sb.append(result[i]).append(" ");
             }
             sb.append("\n");
             return;
         }
 
         for (int i = 0; i < N; i++) {
-            if (visited[i] == false) {
+            if (!visited[i]) {
                 visited[i] = true;
-                result.add(number.get(i));
+                result[num] = numbers[i];
                 recur(num+1);
 
                 visited[i] = false;
-                result.remove(result.size() - 1);
             }
         }
     }
