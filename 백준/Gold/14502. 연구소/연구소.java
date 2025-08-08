@@ -1,7 +1,5 @@
 import java.io.*;
-import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * 1. 아이디어
@@ -29,8 +27,10 @@ public class Main {
     static boolean[][] visited;
     //바이러스가 이동할 수 있는 방향
     static int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
-
     static int result = 0;
+    //바이러스 위치 저장
+    static List<Node> virus = new ArrayList<>();
+    
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -41,9 +41,12 @@ public class Main {
 
         space = new int[N][M];
         temp = new int[N][M];
-        //데이터를 입력 받는다.
         for (int i = 0; i < N; i++) {
-            space[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            int[] map = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            for (int j = 0; j < M; j++) {
+                if (map[j]==2) virus.add(new Node(i, j));
+                space[i][j] = map[j];
+            }
         }
 
         makeWall(0);
@@ -51,14 +54,15 @@ public class Main {
         System.out.println(result);
     }
 
-    //재귀 함수를 사용하여, 총 3개의 벽을 설치하는 방법을 고려한다.
+    //백트래킹을 사용하여, 총 3개의 벽을 설치하는 방법을 고려한다.
     static void makeWall(int count) {
         //벽이 3개 설치가 완료된다.
         if (count == 3) {
             for (int i = 0; i < N; i++) {
-                temp[i] = space[i].clone();
+                for (int j = 0; j < M; j++) {
+                    temp[i][j] = space[i][j];
+                }
             }
-            visited = new boolean[N][M];
             spreadVirus();
             findAnswer();
             return;
@@ -78,12 +82,9 @@ public class Main {
 
     //바이러스를 퍼트린다.
     static void spreadVirus() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (temp[i][j] == 2) {
-                    bfs(i,j);
-                }
-            }
+        for (Node node : virus) {
+            visited = new boolean[N][M];
+            bfs(node.x, node.y);
         }
     }
     static void findAnswer() {
