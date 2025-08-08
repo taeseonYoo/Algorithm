@@ -5,22 +5,32 @@ import java.util.Queue;
 
 /**
  * 1. 아이디어
- * - 1. 0인 곳에서 랜덤으로 2군데에 벽을 설치한다.
+ * - 1. 0인 곳에서 랜덤으로 3 장소에 벽을 설치한다.
  * - 2. bfs로 바이러스를 퍼트린다.
  * - 3. 0인 칸의 개수를 계산한다.
  * 2. 시간복잡도
- * - n^2
+ * - 벽 설치 -> 최악의 경우 약 O((NM)^3)
+ * - BFS -> O(NM)
+ * - 탐색 -> O(NM)
+ * - 최종 O((NM)^3)으로 64*64*64 -> 약 26만이므로 가능하다.
  * 3. 자료구조
  * - BFS를 사용하기 위한 큐
  * - 방문지를 검색하기 위한 visited 배열
+ * - 연구소의 데이터를 저장하기 위한 NxM 배열
+ * - 연구소의 임시 데이터를 저장하기 위한 NxM 배열
  */
 
 public class Main {
     static int N,M;
+    //연구소 데이터
     static int[][] space;
-    static boolean[][] visited;
-    static int result = 0;
+    //임시 저장소
     static int[][] temp;
+    static boolean[][] visited;
+    //바이러스가 이동할 수 있는 방향
+    static int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
+
+    static int result = 0;
     public static void main(String[] args) throws IOException {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -30,32 +40,33 @@ public class Main {
         M = split[1];
 
         space = new int[N][M];
+        temp = new int[N][M];
         //데이터를 입력 받는다.
         for (int i = 0; i < N; i++) {
             space[i] = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
         }
 
-        temp = new int[N][M];
-
         makeWall(0);
 
         System.out.println(result);
-
     }
 
+    //재귀 함수를 사용하여, 총 3개의 벽을 설치하는 방법을 고려한다.
     static void makeWall(int count) {
+        //벽이 3개 설치가 완료된다.
         if (count == 3) {
             for (int i = 0; i < N; i++) {
                 temp[i] = space[i].clone();
             }
             visited = new boolean[N][M];
-            findVirus();
-            findSave();
+            spreadVirus();
+            findAnswer();
             return;
         }
 
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
+                // 연구소의 빈 칸에만 벽을 설치할 수 있다.
                 if (space[i][j] == 0) {
                     space[i][j] = 1;
                     makeWall(count + 1);
@@ -65,8 +76,17 @@ public class Main {
         }
     }
 
-    static void findSave() {
-
+    //바이러스를 퍼트린다.
+    static void spreadVirus() {
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < M; j++) {
+                if (temp[i][j] == 2) {
+                    bfs(i,j);
+                }
+            }
+        }
+    }
+    static void findAnswer() {
         int cnt = 0;
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < M; j++) {
@@ -76,21 +96,7 @@ public class Main {
             }
         }
         result = Math.max(cnt, result);
-
     }
-
-
-    static void findVirus() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (temp[i][j] == 2) {
-                    bfs(i,j);
-                }
-            }
-        }
-    }
-
-    static int[][] dir = {{-1, 0}, {1, 0}, {0, 1}, {0, -1}};
     static void bfs(int x,int y) {
         Queue<Node> q = new LinkedList<>();
         q.offer(new Node(x, y));
@@ -101,6 +107,7 @@ public class Main {
             //큐에서 하나의 원소를 뽑아 출력
             Node pN = q.poll();
 
+            //바이러스가 이동할 수있는 상하좌우 고려
             for (int i = 0; i < 4; i++) {
                 int nx = pN.x + dir[i][0];
                 int ny = pN.y + dir[i][1];
