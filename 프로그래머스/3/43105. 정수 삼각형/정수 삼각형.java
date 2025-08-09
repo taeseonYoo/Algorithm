@@ -1,3 +1,5 @@
+import java.util.*;
+
 class Solution {
     
     int[][] dp;
@@ -11,21 +13,21 @@ class Solution {
         for(int i=1;i<triangle.length;i++){
             
             for(int j=0;j<=i;j++){
-                if(j > 0){
-                    dp[i][j] = Math.max(dp[i-1][j-1]+triangle[i][j],dp[i][j]);
+                //오른쪽 끝에 있는 경우 -> 왼쪽만 
+                if(i == j){
+                    dp[i][j] = dp[i-1][j-1]+triangle[i][j];
                 }
-                
-                if(j != i){
-                    dp[i][j] = Math.max(dp[i-1][j]+triangle[i][j],dp[i][j]);
+                else if(j == 0){ //왼쪽 끝에 있는 경우
+                    dp[i][j] = dp[i-1][j]+triangle[i][j];
+                }
+                else{ 
+                    dp[i][j] = Math.max(dp[i-1][j],dp[i-1][j-1])+triangle[i][j];
                 }
             }
         }
         
-        int result = 0;
-        for(int i=0;i<triangle.length;i++){
-            result = Math.max(result,dp[triangle.length-1][i]);
-        }
+        Arrays.sort(dp[triangle.length-1]);
         
-        return result;
+        return dp[triangle.length-1][triangle.length-1];
     }
 }
