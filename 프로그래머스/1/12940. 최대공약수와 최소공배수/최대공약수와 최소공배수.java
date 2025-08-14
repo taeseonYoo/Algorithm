@@ -6,7 +6,7 @@ class Solution {
         answer[0]=gcd(n,m);
         
         //최소 공배수
-        answer[1]=(n*m)/gcd(n,m);
+        answer[1]=n*(m/answer[0]);
         
         return answer;
     }
