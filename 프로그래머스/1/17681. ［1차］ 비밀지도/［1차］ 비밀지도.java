@@ -8,27 +8,19 @@ class Solution {
     public String[] solution(int n, int[] arr1, int[] arr2) {
         String[] answer = new String[n];
         
-        for(int i=0;i<arr1.length;i++){
-            String a = Integer.toBinaryString(arr1[i]);
-            String b = Integer.toBinaryString(arr2[i]);
+        for(int i=0;i<n;i++){
+            String binary = Integer.toBinaryString(arr1[i] | arr2[i]);
             
-            while(a.length()<n){
-                a = "0" + a;
-            }
-            while(b.length()<n){
-                b = "0" + b;
+            //앞에 0이 부족한 경우
+            while(binary.length()<n){
+                binary = "0" + binary;
             }
             
-            String tmp = "";
-            for(int j=0;j<n;j++){
-                if(a.charAt(j)=='0' && b.charAt(j)=='0'){
-                    tmp += " ";
-                }else{
-                    tmp += "#";
-                }
-            }
-            answer[i] = tmp;
+            binary = binary.replace("1","#");
+            binary = binary.replace("0"," ");
+            answer[i] = binary;
         }
+        
         
         
         return answer;
