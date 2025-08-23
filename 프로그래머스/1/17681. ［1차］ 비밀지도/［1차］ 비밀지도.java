@@ -9,16 +9,14 @@ class Solution {
         String[] answer = new String[n];
         
         for(int i=0;i<n;i++){
-            String binary = Integer.toBinaryString(arr1[i] | arr2[i]);
+            answer[i] = Integer.toBinaryString(arr1[i] | arr2[i]);
             
             //앞에 0이 부족한 경우
-            while(binary.length()<n){
-                binary = "0" + binary;
+            while(answer[i].length()<n){
+                answer[i] = "0" + answer[i];
             }
             
-            binary = binary.replace("1","#");
-            binary = binary.replace("0"," ");
-            answer[i] = binary;
+            answer[i] = answer[i].replace("1","#").replace("0"," ");
         }
         
         
