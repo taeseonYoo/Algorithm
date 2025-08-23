@@ -4,7 +4,7 @@
 약수의 개수를 구하는 함수를 작성한다.
 약수의 개수와 limit를 비교한다.
 2. 범위
-divisor는 O(N)으로 동작한다.
+O(N * 루트 N)
 */
 class Solution {
     public int solution(int number, int limit, int power) {
@@ -25,10 +25,9 @@ class Solution {
     public int divisor(int num){
         int count = 0;
         for(int i=1;i*i<=num;i++){
-            if(num%i==0) {
-                count++;
-                if(i*i<num) count++;
-            }
+            
+            if(i*i==num)count++;
+            else if(num%i==0) count+=2;
         }
         return count;
     }
