@@ -2,18 +2,20 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.sql.SQLOutput;
 import java.util.*;
 
 /**
  * 백준 5014
  * 1. 아이디어
- * - 적어도 몇 번 눌러야 하는지
- * - > 너비 우선 탐색
+ * - 버튼을 적어도 몇 번 눌러야 하는지 -> 너비 우선 탐색
+ *
  * 2. 시간복잡도
- * - 너비 우선 탐색은 O(logN)
+ * - 너비 우선 탐색은 O( F )
+ *
  * 3. 자료구조
  * - 너비 우선 탐색을 위한 큐
+ * - 방문 기록을 위한 visited 배열
+ * 
  * 4. 입력 데이터
  * F : 건물 층수
  * S : 현재 위치
@@ -44,8 +46,9 @@ public class Main {
 
         int result = bfs();
 
+        //Edge case
         if (S == G) System.out.println(0);
-        else System.out.println(result == 0 ? "use the stairs" : result);
+        else System.out.println(result == -1 ? "use the stairs" : result);
 
     }
 
@@ -53,28 +56,30 @@ public class Main {
 
         Queue<Node> q = new LinkedList<>();
         q.add(new Node(S, 0));
-
+        visited[S]=true;
 
         while (!q.isEmpty()) {
             //현재 층
             Node poll = q.poll();
-            if (visited[poll.getFloor()]) continue;
-            visited[poll.getFloor()] = true;
 
             if (poll.getFloor() == G) {
                 return poll.getCount();
             }
 
             //내려갈 수 있다면
-            if (poll.getFloor() - D >= 1 ) {
-                q.add(new Node(poll.getFloor() - D, poll.getCount() + 1));
+            int down = poll.getFloor() - D;
+            if (down >= 1 && !visited[down]) {
+                visited[down] = true;
+                q.add(new Node(down, poll.getCount() + 1));
             }
-            if(poll.getFloor() + U <= F ){
-                q.add(new Node(poll.getFloor() + U, poll.getCount() + 1));
+            int up = poll.getFloor() + U;
+            if(up <= F && !visited[up]){
+                visited[up] = true;
+                q.add(new Node(up, poll.getCount() + 1));
             }
         }
 
-        return 0;
+        return -1;
     }
 
     static class Node{
