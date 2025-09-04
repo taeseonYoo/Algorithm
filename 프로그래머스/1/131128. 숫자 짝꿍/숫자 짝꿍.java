@@ -1,8 +1,7 @@
 /**
 1. 아이디어
-X를 기준으로 for문을 실행
-Y에 contains 함수로 해당 문자가 존재하는 지 확인한다.
-Y에서 찾은 가장 첫번째 문자를 숫자가 아닌 문자로 변환한다.(ex.*)
+자릿수가 300만개 이므로 이중 포문을 돌면 시간 초과 발생
+Y의 각 자리 숫자를 10칸의 배열에 저장한다.
 
 */
 import java.util.*;
@@ -31,8 +30,6 @@ class Solution {
         
         Collections.sort(answer,Collections.reverseOrder());
         
-        if(answer.isEmpty()) return -1+"";
-        else if(answer.get(0)=='0') return "0";
         
         StringBuilder sb = new StringBuilder();
         
@@ -40,6 +37,11 @@ class Solution {
             sb.append(answer.get(i));
         }
         
-        return sb.toString();
+        String result = sb.toString();
+        
+        if(result.equals(""))return "-1";
+        else if(result.startsWith("0")) return "0";
+        
+        return result;
     }
 }
