@@ -41,33 +41,34 @@ public class Main {
     static int[] my = {0, 1, 0, -1};
     static int answer = 0;
 
-    static void robot(int x, int y,int dir) {
+    static void robot(int x, int y, int dir) {
 
-        if (map[x][y]==0){
-            map[x][y] = 2;
+        //현재 칸이 청소되지 않은 경우, 청소한다.
+        if (map[x][y] == 0) {
+            map[x][y] = -1;
             answer++;
         }
 
-        //주변 4칸 중 청소되지 않은 빈 칸이 있는 경우
+        //현재 칸의 주변 4칸 중 청소되지 않은 빈 칸이 없는 경우, 모두 1인 경우 true
         for (int i = 0; i < 4; i++) {
             dir = (dir+3)%4;
-            int nx = x + mx[dir];
-            int ny = y + my[dir];
-
-            if (nx < N && ny < M && nx >= 0 && ny >= 0) {
-                if (map[nx][ny] == 0) {
-                    robot(nx, ny, dir);
+            int dx = x + mx[dir];
+            int dy = y + my[dir];
+            if (dx < N && dx >= 0 && dy < M && dy >= 0) {
+                if (map[dx][dy] == 0) {
+                    robot(dx,dy,dir);
                     return;
                 }
             }
         }
 
-        //주변 4칸 중 청소되지 않은 빈 칸이 없는 경우
-        int nx = x - mx[dir];
-        int ny = y - my[dir];
-        if (nx < N && ny < M && nx >= 0 && ny >= 0 && map[nx][ny] != 1) {
-            robot(nx, ny, dir);
+        int dx = x - mx[dir];
+        int dy = y - my[dir];
+
+        if (dx < N && dx >= 0 && dy < M && dy >= 0 && map[dx][dy]!=1) {
+            robot(dx,dy,dir);
         }
+
     }
 
 }
