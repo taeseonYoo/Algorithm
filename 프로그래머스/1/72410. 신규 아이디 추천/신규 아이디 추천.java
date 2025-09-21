@@ -2,34 +2,22 @@ import java.util.*;
 
 class Solution {
     public String solution(String new_id) {
-        String answer = "";
-        
-        StringBuilder sb = new StringBuilder();
+
         //1단계
-        for(int i=0;i<new_id.length();i++){
-            char ch = new_id.charAt(i);
-            
-            if(Character.isUpperCase(ch)){
-                sb.append(Character.toLowerCase(ch));
-            }else sb.append(ch);
-        }
+        new_id = new_id.toLowerCase();
+        
         //2단계
         String regex = "[^a-z0-9\\-_.]";
-        new_id = sb.toString().replaceAll(regex,"");
+        new_id = new_id.replaceAll(regex,"");
         
         //3단계
         new_id = new_id.replaceAll("\\.+","\\.");
         
         //4단계
-        if(new_id.length()>0){
-            if(new_id.charAt(0)=='.') new_id = new_id.substring(1);
-        }
-        if(new_id.length()>0){
-            if(new_id.charAt(new_id.length()-1)=='.') new_id = new_id.substring(0,new_id.length()-1);
-        }
+        new_id = new_id.replaceAll("^[.]|[.]$","");
         
         //5단계
-        if("".equals(new_id)) new_id = "a";
+        new_id = new_id.isEmpty() ? "a" : new_id;
         
         //6단계
         if(new_id.length()>=16) {
