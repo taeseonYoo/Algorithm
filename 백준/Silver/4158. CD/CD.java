@@ -11,6 +11,7 @@ import java.util.*;
 public class Main {
 
     static int answer = 0;
+    static int[] sk;
 
     public static void main(String[] args) throws IOException {
 
@@ -26,40 +27,35 @@ public class Main {
 
             answer = 0;
 
-            int[] sk = new int[N];
-            int[] sy = new int[M];
-
             //상근이의 CD
+            sk = new int[N];
+
+            //상근이의 CD 입력 받기
             for (int i = 0; i < N; i++) {
                 sk[i] = Integer.parseInt(br.readLine());
             }
             //선영이의 CD
             for (int i = 0; i < M; i++) {
-                sy[i] = Integer.parseInt(br.readLine());
+                int target = Integer.parseInt(br.readLine());
+                binarySearch(target);
             }
-
-            //상근이의 CD를 기준으로, 선영이의 CD를 탐색한다.
-            for (int i = 0; i < N; i++) {
-                int target = sk[i];
-
-                binarySearch(sy,target);
-            }
+            
             System.out.println(answer);
         }
     }
 
-    static void binarySearch(int[] cluster, int target) {
+    static void binarySearch(int target) {
         int start = 0;
-        int end = cluster.length - 1;
+        int end = sk.length - 1;
 
         while (start <= end) {
             int mid = (start + end) / 2;
 
-            if (cluster[mid] > target) {
+            if (sk[mid] > target) {
                 end = mid-1;
-            }else if(cluster[mid] < target){
+            }else if(sk[mid] < target){
                 start = mid+1;
-            } else if (cluster[mid] == target) {
+            } else if (sk[mid] == target) {
                 answer++;
                 return;
             }
