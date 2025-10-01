@@ -1,33 +1,18 @@
-import java.util.*;
 
 class Solution {
     public int[] solution(int brown, int yellow) {
-        int[] answer = new int[2];
-        
-        List<Integer> list = new ArrayList<>();
-        
-        //yellow의 약수 구하기
-        for(int i=1;i<=Math.sqrt(yellow);i++){
-            if(yellow%i==0){
-                list.add(i);
+        //가로 >= 세로
+        int total = brown + yellow;
+
+        for(int h=3; h<=total-3; h++){
+            int w = total/h;
+
+            if(total % w == 0 && w >= h){
+                if((w-2) * (h-2) == yellow){
+                    return new int[]{w,h};
+                }
             }
         }
-        
-        for(int i=0;i<list.size();i++){
-            
-            int height = list.get(i);
-            int width = yellow /height;
-                
-            if(((width+2)*2+ height*2) == brown){
-                answer[0]=width+2;
-                answer[1]=height+2;
-                break;
-            }
-            
-        }
-        
-        
-        
-        return answer;
+        return new int[0];
     }
 }
