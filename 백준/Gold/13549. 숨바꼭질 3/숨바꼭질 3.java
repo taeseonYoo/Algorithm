@@ -23,8 +23,7 @@ class Node {
 public class Main {
 
     static final int INF = Integer.MAX_VALUE;
-    static int n,k, answer;
-    static ArrayList<ArrayList<Node>> graph = new ArrayList<>();
+    static int n,k;
     static int[] d = new int[100001];
 
     public static void main(String[] args) throws IOException {
@@ -38,10 +37,7 @@ public class Main {
             System.out.println(n - k);
             return;
         }
-
-        for (int i = 0; i <= 100000; i++) {
-            graph.add(new ArrayList<Node>());
-        }
+        
         Arrays.fill(d, INF);
 
         dijkstra();
