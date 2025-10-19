@@ -1,7 +1,7 @@
 import java.util.*;
 
 class Solution {
-    public List<Integer> solution(String today, String[] terms, String[] privacies) {
+    public int[] solution(String today, String[] terms, String[] privacies) {
         List<Integer> answer = new ArrayList<>();
         
         HashMap<String,Integer> m = new HashMap<>();
@@ -23,7 +23,7 @@ class Solution {
             }
         }
         
-        return answer;
+        return answer.stream().mapToInt(i->i).toArray();
     }
     
     private int getDate(String date) {
