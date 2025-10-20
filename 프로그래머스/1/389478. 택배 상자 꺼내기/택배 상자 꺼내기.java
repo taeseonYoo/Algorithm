@@ -11,31 +11,29 @@ class Solution {
         }
     
         
-        int box=1;
-        int pt = 1;
-        
-        while(box<=n){
-            if(box % w == 0){
-                warehouse.get(pt).add(box++);
-                continue;
+        int box = 1;
+        boolean leftToRight = true;
+
+        // 상자 쌓기 (지그재그)
+        while (box <= n) {
+            if (leftToRight) {
+                for (int i = 1; i <= w && box <= n; i++) {
+                    warehouse.get(i).add(box++);
+                }
+            } else {
+                for (int i = w; i >= 1 && box <= n; i--) {
+                    warehouse.get(i).add(box++);
+                }
             }
-            
-            if( (box / w)%2==0 ){
-                warehouse.get(pt++).add(box++);
-            }else{
-                warehouse.get(pt--).add(box++);
-            }
+            leftToRight = !leftToRight;
         }
         
         for(int i=1;i<=w;i++){
-            answer = 0;
-            for(int j=0;j<warehouse.get(i).size();j++){
-                int target = warehouse.get(i).get(j);
-                if(target == num){
-                    answer = warehouse.get(i).size()-j;
-                }
+            List<Integer> column = warehouse.get(i);
+            int index = column.indexOf(num);
+            if (index != -1) {
+                return column.size() - index;
             }
-            if(answer!=0) break;
         }
         
         
