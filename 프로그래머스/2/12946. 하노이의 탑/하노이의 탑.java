@@ -1,18 +1,12 @@
 import java.util.*;
 class Solution {
-    List<int []> answer;
+    List<int []> answer = new ArrayList<>();
     public int[][] solution(int n) {
-        answer = new ArrayList<>();
         
         hanoi(n,1,2,3);
         
-        int[][] result = new int[answer.size()][2];
         
-        for(int i=0;i<result.length;i++){
-            result[i] = answer.get(i);
-        }
-        
-        return result;
+        return answer.toArray(new int[answer.size()][2]);
     }
     public void hanoi(int n,int start,int middle,int target){
         if(n==0) return;
